@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "isolatedModules": true,
+
+    "types": ["node"],
+
+    "allowJs": true,
+    "jsx": "react",
+
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": false
+    // "typeRoots": ["node_modules/@types", "src/js/types"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "build", "webpack"]
+}
