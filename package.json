@@ -39,7 +39,7 @@
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^6.0.1",
     "pixi-spine": "^3.0.11",
-    "pixi.js": "5.0.1",
+    "pixi.js": "^6.1.2",
     "prettier": "^2.3.2",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.2.1",
@@ -54,6 +54,9 @@
     "workbox-webpack-plugin": "^6.2.4"
   },
   "dependencies": {
+    "@pixi/sound": "^4.0.5",
+    "pixi-ease": "^3.0.7",
+    "pixi-scenes": "^1.4.0",
     "webfont": "^11.2.26",
     "webfontloader": "^1.6.28",
     "win-node-env": "^0.4.0"

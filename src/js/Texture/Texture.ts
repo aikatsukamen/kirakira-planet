@@ -1,32 +1,35 @@
 import * as PIXI from 'pixi.js';
 import * as Const from '../const';
+import { PartsInfo, RESOURCE_NAME } from '../types/types';
 
 /**
  * テクスチャ管理クラス(シングルトン)
+ * Constに定義したTextureを全部読み込んでおき、要求に応じて返す
  */
-export class MyTextureManager {
+class MyTextureManager {
+  /** テクスチャ管理用の連想配列 */
   textures: Map<string, PIXI.Texture>;
   sharedInstance: {
     value: typeof MyTextureManager;
   };
 
-  constructor(c = null) {
+  constructor() {
     if (MyTextureManager.prototype.sharedInstance) {
       return MyTextureManager.prototype.sharedInstance as any;
     } else {
       Object.defineProperty(MyTextureManager.prototype, 'sharedInstance', { value: this });
-      this.textures = new Map(); // テクスチャ管理用の連想配列
+      this.textures = new Map();
       return this;
     }
   }
 
   /**
    * 指定されたテクスチャを指定の名前でロードして連想配列に格納する(なんかTexture.Loaderなるものがあるっぽいけど...)
-   * @param {String} name テクスチャ名(タグ)
-   * @param {String} path テクスチャファイルパス
-   * @returns {Boolean} ロードの成否
+   * @param name テクスチャ名(タグ)
+   * @param path テクスチャファイルパス
+   * @returns ロードの成否
    */
-  loadTexture(name: string, path: string, area = null) {
+  loadTexture(name: string, path: string): boolean {
     let texture = PIXI.Texture.from(path);
     if (texture != null) {
       this.textures.set(name, texture);
@@ -50,7 +53,6 @@ export class MyTextureManager {
 
   /**
    * JSONに記述されているkey:pathでテクスチャをロードする
-   * @returns {Promise} テクスチャロードのPromise
    */
   loadTextureByJson(): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -61,20 +63,6 @@ export class MyTextureManager {
             fail = true;
           }
         } else {
-          type PartsInfo = {
-            parts: {
-              id: string;
-              part: {
-                x: number;
-                y: number;
-                z: number;
-                u: number;
-                v: number;
-              };
-            };
-            texture: string;
-          };
-
           for (let [id, part] of Object.entries((info as PartsInfo).parts)) {
             part = part as PartsInfo['parts']['part'];
 
@@ -97,25 +85,23 @@ export class MyTextureManager {
    * @param {String} name
    * @returns {PIXI.Texture}
    */
-  getTexruteByName(name: string) {
-    if (name != null && this.textures.has(name)) {
-      return this.textures.get(name);
+  getTexruteByName(name: RESOURCE_NAME) {
+    const texture = this.textures.get(name);
+    if (texture) {
+      return texture;
     } else {
       console.error('no texture loaded name :' + name);
       return null;
     }
   }
 
-  /**
-   * 全てのテクスチャをアップデート
-   * @param {PIXI.Renderer}
-   */
-  // refleshAllTextures(renderer) {
-  //     // let texMgr = new PIXI.TextureManager(renderer);
-  //     for (let [k, v] of this.textures) {
-  //         // texMgr.updateTexture(v);
-  //         // v.destroy();
-  //         PIXI.Texture.removeFromCache(v);
-  //     }
-  // }
+  createSprite(name: RESOURCE_NAME) {
+    const texture = this.getTexruteByName(name);
+    if (!texture) {
+      throw new Error(`指定されたテクスチャが取得できなかった: name=${name}`);
+    }
+    return new PIXI.Sprite(texture);
+  }
 }
+
+export default new MyTextureManager();

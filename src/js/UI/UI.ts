@@ -7,7 +7,8 @@
 
 import * as PIXI from 'pixi.js';
 import * as Const from '../const';
-import { MyTextureManager } from '../Texture/Texture';
+import MyTextureManager from '../Texture/Texture';
+import { RESOURCE_NAME } from '../types/types';
 
 class UIContainer extends PIXI.Container {
   constructor() {
@@ -15,12 +16,12 @@ class UIContainer extends PIXI.Container {
     // this.spriteList = new Array();
     this.btnList = new Array();
     this.labelList = new Map();
-    this.texManager = new MyTextureManager();
+    this.texManager = MyTextureManager;
   }
   // spriteList: any[];
   btnList: Button[];
   labelList: Map<string, PIXI.Sprite>;
-  texManager: MyTextureManager;
+  texManager: typeof MyTextureManager;
 
   moveBtn: Button;
   linkBtn: Button;
@@ -34,11 +35,11 @@ class UIContainer extends PIXI.Container {
 
   init() {
     // ボタン
-    this.moveBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_MOVE));
-    this.linkBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_LINK));
-    this.sampleBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_SAMPLE));
-    this.cancelBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_CANCEL));
-    this.setBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_SET));
+    this.moveBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_MOVE) as PIXI.Texture<PIXI.Resource>);
+    this.linkBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_LINK) as PIXI.Texture<PIXI.Resource>);
+    this.sampleBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_SAMPLE) as PIXI.Texture<PIXI.Resource>);
+    this.cancelBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_CANCEL) as PIXI.Texture<PIXI.Resource>);
+    this.setBtn = new Button(this.texManager.getTexruteByName(Const.TEX_UI_BTN_SET) as PIXI.Texture<PIXI.Resource>);
 
     // ボタンの初期配置(水平方向)
     this.moveBtn.x -= 120;
@@ -58,17 +59,12 @@ class UIContainer extends PIXI.Container {
       s.scale.x = s.scale.y = 0.5;
       s.interactive = true;
       s.buttonMode = true;
-      s.visible = false;
+      s.visible = true;
       this.addChild(s);
     });
 
-    // ラベル
-    // PIXI.TextMetrics.BASELINE_SYMBOL += "あ｜";
-    // this.itemLabel =  new PIXI.Text('',
-    //         {fontFamily : 'Shirokuma', fontWeight: 'bold', fontSize: 30, fill : 0xf8f8f8, stroke:0x000000, strokeThickness: 3, align :'center'});
     this.itemLabel = null;
     // ラベルの配置
-    // this.switchMode(Const.UI_MODE.HIDE);
     this.switchMode(Const.UI_MODE.DEFAULT);
   }
 
@@ -86,7 +82,8 @@ class UIContainer extends PIXI.Container {
       this.itemLabel = this.labelList.get(author) as PIXI.Sprite;
       this.itemLabel.visible = true;
     } else {
-      const texture = this.texManager.getTexruteByName('itemlabel_' + author);
+      const name = ('itemlabel_' + author) as RESOURCE_NAME;
+      const texture = this.texManager.getTexruteByName(name);
       let label = new PIXI.Sprite(texture as PIXI.Texture);
       this.itemLabel = label;
       label.x = 0;
@@ -151,38 +148,34 @@ class UIContainer extends PIXI.Container {
 }
 
 class Button extends PIXI.Sprite {
-  constructor(c: PIXI.Texture | null | undefined) {
-    console.log(c);
-    if (c) {
-      super(c);
-    } else {
-      console.warn('テクスチャが無い');
-    }
+  constructor(c: PIXI.Texture) {
+    super(c);
   }
 
   /**
    * ボタンにイベントリスナーを登録する
-   * @param {function} listener
+   * @param listener
    */
-  setClickEventListner(listener: any) {
+  setClickEventListner = (listener: any) => {
     this.setClickEventListner = listener as any;
     this.on('pointertap', listener);
-  }
+  };
 
-  removeClickEventListner() {
+  removeClickEventListner = () => {
     this.off('pointertap', this.setClickEventListner);
     this.setClickEventListner = null as any;
-  }
+  };
 
-  enable() {
+  /** ボタン有効化。 */
+  enable = () => {
     this.alpha = 1;
     this.interactive = true;
-  }
+  };
 
-  disable() {
+  disable = () => {
     this.alpha = 0.5;
     this.interactive = false;
-  }
+  };
 }
 
 export default UIContainer;

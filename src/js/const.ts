@@ -68,6 +68,22 @@ export const TEX_UI_BTN_LINK = 'ui-btn-link';
 export const TEX_UI_BTN_SET = 'ui-btn-set';
 export const TEX_UI_BTN_CANCEL = 'ui-btn-cancel';
 
+export const SCENE_LIST = {
+  /** タイトル */
+  splash: 'splash',
+  /** ゲームモード選択とか */
+  menu: 'menu',
+  /** 曲選択 */
+  selectSong: 'selectSong',
+  /** 曲プレイ中 */
+  playSong: 'playSong',
+  /** リザルト */
+  result: 'result',
+  /** ローディング */
+  loading: 'loading',
+  gameover: 'gameover',
+};
+
 /**
  * UIモード
  */
@@ -525,6 +541,15 @@ export const ITEMINFO = {
  * h_ttp://amaai-poconuts.com/c96/
  */
 export const RESOURCE = {
+  tap_start: {
+    texture: './res/img/tap_start.png',
+  },
+  notes_red: {
+    texture: './res/img/notes_red.png',
+  },
+  judge_area: {
+    texture: './res/img/judge_area.png',
+  },
   tile_b: {
     texture: './res/img/room/floor_b.png',
   },
