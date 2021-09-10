@@ -1,0 +1,55 @@
+
+chanja_rinhand.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+おやゆび 結合
+  rotate: true
+  xy: 554, 131
+  size: 96, 167
+  orig: 96, 167
+  offset: 0, 0
+  index: -1
+ひとさしゆび 結合
+  rotate: true
+  xy: 721, 147
+  size: 80, 145
+  orig: 80, 145
+  offset: 0, 0
+  index: -1
+中指から奥　結合
+  rotate: false
+  xy: 445, 99
+  size: 109, 179
+  orig: 109, 179
+  offset: 0, 0
+  index: -1
+手 結合
+  rotate: true
+  xy: 573, 368
+  size: 143, 415
+  orig: 143, 415
+  offset: 0, 0
+  index: -1
+手首 奥
+  rotate: true
+  xy: 573, 227
+  size: 141, 415
+  orig: 141, 415
+  offset: 0, 0
+  index: -1
+腕１ 結合
+  rotate: true
+  xy: 0, 278
+  size: 233, 573
+  orig: 233, 573
+  offset: 0, 0
+  index: -1
+腕２ 結合
+  rotate: true
+  xy: 0, 0
+  size: 278, 445
+  orig: 278, 445
+  offset: 0, 0
+  index: -1
