@@ -39,10 +39,10 @@ const config: Configuration = {
   resolveLoader: {},
   stats: {},
   watchOptions: {},
-  entry: ['./src/js/main.ts'],
+  entry: ['./src/js/index.ts'],
 
   output: {
-    path: path.resolve(`./build/`),
+    path: path.resolve(`./docs/`),
     filename: 'js/bundle.js',
   },
   module: {
@@ -52,7 +52,7 @@ const config: Configuration = {
         test: /\.(tsx|ts)$/,
         loader: 'babel-loader',
         options: {
-          plugins: ['@babel/plugin-proposal-optional-chaining', '@babel/plugin-proposal-nullish-coalescing-operator'],
+          plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-optional-chaining', '@babel/plugin-proposal-nullish-coalescing-operator'],
         },
       },
       // 画像ファイル

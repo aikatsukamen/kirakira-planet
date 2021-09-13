@@ -1,0 +1,287 @@
+{
+  "title": "HAPPY∞アイカツ",
+  "level": 1,
+  "musictype": 1,
+  "videoId": "j83U2Zf6vCA",
+  "offset": 6,
+  "musicLength": 5000,
+  "battle": [0, 29, 70, 105],
+  "notes": [
+    {
+      "time": 2.3666450000000006,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 3.583318000000001,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 4.6333030000000015,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 5.949967999999999,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 7.166638000000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 8.516642999999998,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 9.633275,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 12.299928000000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 33.016499,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 34.266489,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 35.48315,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 36.766465000000004,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 37.899796,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 39.283125,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 40.383127,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 41.46645,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 42.899786,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 44.999767,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 47.149758999999996,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 49.116415,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 50.233081,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 71.31630100000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 72.41628200000001,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 73.666283,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 74.89961400000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 76.1996,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 78.56625300000002,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 79.74958700000002,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 81.049586,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 82.13290900000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 83.48290100000001,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 84.732893,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 85.89955600000002,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 86.04955300000002,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 88.432884,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 109.332763,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 110.59942000000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 111.766085,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 112.94941200000001,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 114.29940400000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 115.81606500000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 118.149388,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 120.36603600000002,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 121.56603100000002,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 124.249359,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 125.43267800000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    }
+  ]
+}

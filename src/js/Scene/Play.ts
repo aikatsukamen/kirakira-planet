@@ -4,27 +4,38 @@ import MyTextureManager from '../Texture/Texture';
 import { sound } from '@pixi/sound';
 import * as Const from '../const';
 import { ease } from 'pixi-ease';
-import { circle, whiteBack } from './Common';
+import { fadeout, whiteBack } from './Common';
 import Notes from '../Item/Notes';
 import JudgeLine from '../Item/JudgeLine';
+import YTPlayer from 'yt-player';
+import { ScoreData } from '../types/types';
 
 /** 判定テーブル */
 const RATING_TABLE = {
   perfect: {
-    score: 1000,
+    score: 700,
     range: 32, //ms
+    color: 0xff0000,
   },
   great: {
-    score: 500,
+    score: 600,
     range: 64, //ms
+    color: 0xffff00,
   },
   good: {
-    score: 100,
-    range: 90, //ms
+    score: 500,
+    range: 134, //ms
+    color: 0x0000ff,
+  },
+  safe: {
+    score: 400,
+    range: 200, //ms
+    color: 0x00ff00,
   },
   miss: {
     score: 0,
-    range: 134, //ms
+    range: 300, //ms
+    color: 0x000000,
   },
 };
 
@@ -32,13 +43,23 @@ export default class PlaySong extends Scene {
   private screenCenterWidth: number = 0;
   private screenCenterHeight: number = 0;
 
-  private delta: number;
+  private loading: PIXI.Sprite;
+
+  private scoreText: PIXI.Text = new PIXI.Text(`0`, { fontSize: 72, fill: 'gold', dropShadow: true, dropShadowColor: 'sliver' });
+
   /** 楽曲開始したか */
   private isStartSong = false;
   /** 楽曲開始からの経過時間 */
   private gameTime: number = 0;
 
   private totalScore: number = 0;
+  private judgeResult: {
+    perfect: number;
+    verygood: number;
+    good: number;
+    safe: number;
+    miss: number;
+  };
 
   judgeLine0: JudgeLine;
   judgeLine1: JudgeLine;
@@ -47,50 +68,12 @@ export default class PlaySong extends Scene {
   judgeLine4: JudgeLine;
   judgeLine5: JudgeLine;
 
-  /** ハイスピ */
-  private highspeed: number;
-
   /** 譜面 */
-  private scoreData = {
-    /** タイトル */
-    title: 'ファンタジっくイマジネーション',
-    /** タイプ */
-    musictype: 1,
-    /** Youtube ID */
-    music: 'mXtqz850Yb8',
-    /** youtube offset */
-    offset: 6,
-    notes: [
-      // time: 着弾時刻(秒)
-      // type: ノーツの種類
-      // スタート位置
-      // 到着位置
-      // 同時押しグループ
-      { time: 8, type: 0, start: 0, finish: 0, group: 0 },
-      { time: 9, type: 0, start: 0, finish: 1, group: 0 },
-      { time: 10, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 11, type: 0, start: 0, finish: 3, group: 0 },
-      { time: 12, type: 0, start: 0, finish: 4, group: 0 },
-      { time: 13, type: 0, start: 0, finish: 5, group: 0 },
-      { time: 16, type: 0, start: 0, finish: 1, group: 0 },
-      { time: 19, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 19, type: 0, start: 0, finish: 5, group: 0 },
-      { time: 22, type: 0, start: 0, finish: 3, group: 0 },
-      { time: 24, type: 0, start: 0, finish: 1, group: 0 },
-      { time: 26, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 28, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 30, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 32, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 34, type: 0, start: 0, finish: 1, group: 0 },
-      { time: 36, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 38, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 40, type: 0, start: 0, finish: 2, group: 0 },
-      { time: 22, type: 0, start: 0, finish: 2, group: 0 },
-    ],
-  };
+  private scoreData: ScoreData;
 
   private notesMap: Map<string, Notes> = new Map();
   private notesContainer: PIXI.Container;
+  private startButtonContainer: PIXI.Container = new PIXI.Container();
 
   /** ノーツ出現時間(ms): 大きくするほど低速 */
   MARKER_APPEARANCE_DELTA = 1000;
@@ -98,6 +81,13 @@ export default class PlaySong extends Scene {
   /** 中心からアイコンまでの距離 */
   UNIT_ARRANGE_RADIUS: number;
 
+  private player: YTPlayer;
+
+  private musicvolume: number = 50;
+
+  private battleIndex: number = 0;
+
+  /** インスタンス生成時処理 */
   public init = (): void => {
     if (!this.app) throw 'null';
     this.screenCenterWidth = this.app.screen.width / 2;
@@ -106,28 +96,64 @@ export default class PlaySong extends Scene {
     this.SCREEN_HEIGHT = this.app.screen.height;
     this.UNIT_ARRANGE_RADIUS = this.SCREEN_HEIGHT * 0.49;
 
-    this.createJudgeLine();
-
     // 音
     sound.add('se_tap', 'res/se/tap.mp3');
-    sound.add('song', 'res/song/fi.mp3');
 
-    whiteBack.alpha = 0;
-    this.addChild(whiteBack);
-  };
+    // 判定ライン生成
+    this.createJudgeLine();
 
-  public start = (): void => {
-    const notesTexture = MyTextureManager.getTexruteByName('notes_red') as PIXI.Texture<PIXI.Resource>;
+    this.createLoadingButton();
+
+    this.scoreText.anchor.set(0.5);
+    this.scoreText.x = this.screenCenterWidth;
+    this.scoreText.y = this.screenCenterHeight / 8;
+    this.addChild(this.scoreText);
+
+    // ロード画面用の白
+    this.back = whiteBack();
+    this.addChild(this.back);
 
     this.notesContainer = new PIXI.Container();
     this.addChild(this.notesContainer);
+  };
 
-    // 中央
-    circle.x = this.screenCenterWidth - circle.width / 2;
-    circle.y = this.screenCenterHeight / 2 - circle.height / 2;
-    console.log(`centerCircle x=${circle.x} y=${circle.y}`);
-    this.addChild(circle);
+  back: PIXI.Graphics;
 
+  /** シーンが呼ばれた時の処理 */
+  public start = (): void => {
+    const notesTexture = MyTextureManager.getTexruteByName('notes_red') as PIXI.Texture<PIXI.Resource>;
+
+    this.back.alpha = 0;
+
+    this.notesContainer.children.map((item) => item.destroy());
+    this.startButtonContainer.children.map((item) => item.destroy());
+
+    // スタートボタン(モバイルデバイスはclickイベントを挟まないと動画が再生されない)
+    this.createStartButton();
+
+    // 楽曲
+    this.scoreData = window.scoreData;
+    this.loadMusic();
+    this.judgeResult = {
+      perfect: 0,
+      verygood: 0,
+      good: 0,
+      safe: 0,
+      miss: 0,
+    };
+    this.scoreText.text = '0';
+
+    this.gameTime = 0;
+    this.isStartSong = false;
+    this.battleIndex = 0;
+    this.notesMap = new Map();
+    this.loading.alpha = 1;
+
+    // // 中央
+    // circle.x = this.screenCenterWidth - circle.width / 2;
+    // circle.y = this.screenCenterHeight / 2 - circle.height / 2;
+    // console.log(`centerCircle x=${circle.x} y=${circle.y}`);
+    // this.addChild(circle);
     // ノーツセンター座標
     console.log(`note center x=${this.screenCenterWidth - notesTexture.width / 2} y=${this.screenCenterHeight / 2 - notesTexture.height / 2}`);
 
@@ -143,7 +169,7 @@ export default class PlaySong extends Scene {
 
     // もろもろ終わったらフェードイン
     const example = ease.add(
-      whiteBack,
+      this.back,
       {
         x: 0,
         y: 0,
@@ -157,14 +183,95 @@ export default class PlaySong extends Scene {
     );
     example.once('complete', () => {
       // フェードイン後
-      this.startSong();
     });
   };
 
+  private loadMusic = () => {
+    // 曲
+    const videoId = this.scoreData.videoId;
+    console.log(`loadMusic videoId=${videoId}`);
+
+    // sound.add('song', 'res/song/fi.mp3');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    this.player = new YTPlayer('#player', {
+      width,
+      height,
+      autoplay: false,
+      controls: false,
+      captions: false,
+      keyboard: false,
+      related: false,
+      annotations: false,
+      modestBranding: false,
+      host: 'https://www.youtube-nocookie.com', // これ入れないとなんかアクセスする
+    });
+    this.player.load(videoId);
+    // this.player.setVolume(0);
+
+    // youtubeの準備ができたら開始ボタン押せるようにする
+    this.player.once('cued', this.enableStartButton);
+  };
+
   /** 楽曲開始 */
-  startSong = () => {
-    this.isStartSong = true;
-    sound.play('song');
+  private startSong = () => {
+    // スタートボタンを非表示にする
+    this.startButtonContainer.children.map((item) => item.destroy());
+
+    // 再生開始
+    this.player.play();
+    this.player.once('playing', () => {
+      // バッファ始まったらシークする
+      this.player.seek(this.scoreData.offset);
+      this.player.setVolume(this.musicvolume);
+      this.isStartSong = true;
+    });
+  };
+
+  /** スタートボタンを作る */
+  private createStartButton = () => {
+    const geo = new PIXI.Graphics().beginFill(0x000000).drawRect(0, 0, 5000, 2500).endFill();
+    geo.width = 5000;
+    geo.height = 5000;
+    geo.interactive = true;
+    geo.buttonMode = true;
+    geo.alpha = 0;
+    geo.once('pointertap', this.startSong);
+
+    const sprite = MyTextureManager.createSprite('ready');
+    if (!sprite) return;
+    sprite.x = this.screenCenterWidth;
+    sprite.y = this.screenCenterHeight;
+    sprite.anchor.set(0.5);
+
+    this.startButtonContainer.alpha = 0;
+    this.startButtonContainer.addChild(geo);
+    this.startButtonContainer.addChild(sprite);
+    this.addChild(this.startButtonContainer);
+  };
+
+  private createLoadingButton = () => {
+    const sprite = MyTextureManager.createSprite('loading');
+    if (!sprite) return;
+    this.loading = sprite;
+    sprite.x = (this.app?.screen.width ?? 0) - 100;
+    sprite.y = (this.app?.screen.height ?? 0) - 100;
+    sprite.anchor.set(0.5);
+    sprite.interactive = false;
+    sprite.buttonMode = false;
+    sprite.alpha = 1;
+    sprite.scale.x = 2;
+    sprite.scale.y = 2;
+    this.addChild(sprite);
+  };
+
+  private enableStartButton = () => {
+    // ローディングを非表示
+    this.loading.alpha = 0;
+
+    // ボタン押せるように
+    this.startButtonContainer.interactive = true;
+    this.startButtonContainer.alpha = 1;
   };
 
   /**
@@ -172,10 +279,32 @@ export default class PlaySong extends Scene {
    * @param delta 前回からの差分
    */
   public update = (delta: number): void => {
-    this.delta = delta;
     if (this.isStartSong) {
       this.gameTime += delta;
-      this.notesControl();
+      // 流し終わった
+      if (this.gameTime >= this.scoreData.musicLength) {
+        this.player.stop();
+        this.player.destroy();
+      } else {
+        this.player.setVolume(this.musicvolume);
+        if (window.debug) window.debug.message = `volume: ${this.musicvolume}`;
+        this.notesControl();
+      }
+
+      // バトル表示
+      const battleTime = this.scoreData.battle[this.battleIndex];
+      if (this.gameTime > battleTime * 1000) {
+        this.showBattleLabel(this.battleIndex);
+        this.battleIndex++;
+      }
+    }
+
+    if (this.player.destroyed) {
+      window.musicResult = {
+        totalScore: this.totalScore,
+        judge: this.judgeResult,
+      };
+      fadeout(this.back, this.scenes as SceneManager, Const.SCENE_LIST.result);
     }
   };
 
@@ -282,7 +411,7 @@ export default class PlaySong extends Scene {
   };
 
   // 判定処理
-  judge = (unitIcon: JudgeLine) => {
+  private judge = (unitIcon: JudgeLine) => {
     console.log(`judge: ${unitIcon.id}`);
     var time = this.gameTime;
 
@@ -321,16 +450,84 @@ export default class PlaySong extends Scene {
     });
   };
 
-  reaction = (marker: Notes, rating: string) => {
+  /** 判定に応じた処理 */
+  private reaction = (marker: Notes, rating: string) => {
     // マーカー不可視化
     marker.interactive = false;
     marker.isAwake = false;
     marker.visible = false;
 
-    // RateLabel({ text: rating.toUpperCase() }).setPosition(this.gridX.center(), this.gridY.center()).addChildTo(this);
+    // 判定表示
+    this.showRateLabel({ rate: rating, fast: false, showFast: false });
 
+    // スコア加算
     this.totalScore += RATING_TABLE[rating].score;
+    this.judgeResult[rating] += 1;
+    this.updateScoreLabel();
 
     console.log(`total=${this.totalScore} rating=${rating}`);
   };
+
+  private judgeText: PIXI.Text;
+  private judgeShowTimer: number = 0;
+  /** 画面中央に判定表示 */
+  private showRateLabel(arg: { rate: string; fast: boolean; showFast: boolean }) {
+    if (this.judgeText) this.judgeText.destroy();
+    if (this.judgeShowTimer > 0) {
+      window.clearTimeout(this.judgeShowTimer);
+      this.judgeShowTimer = 0;
+    }
+    const rateText = arg.rate.toUpperCase();
+    const rate = RATING_TABLE[arg.rate];
+
+    const text = new PIXI.Text(rateText, { fontSize: 72, fill: rate.color, dropShadow: true });
+    this.judgeText = text;
+    text.x = this.screenCenterWidth;
+    text.y = this.screenCenterHeight;
+    text.anchor.set(0.5);
+    this.addChild(text);
+
+    // 一定時間で消える
+    this.judgeShowTimer = window.setTimeout(() => {
+      this.judgeText.alpha = 0;
+    }, 600);
+  }
+
+  /** 画面中央に判定表示 */
+  private updateScoreLabel() {
+    this.scoreText.text = `${this.totalScore}`;
+  }
+
+  private battleLabel: PIXI.Sprite;
+  /** 画面中央に判定表示 */
+  private showBattleLabel(type: number) {
+    if (this.battleLabel) this.battleLabel.destroy();
+    let typeText: string = 'battle_op';
+    switch (type) {
+      case 0:
+        typeText = 'battle_op';
+        break;
+      case 1:
+        typeText = 'battle_main';
+        break;
+      case 2:
+        typeText = 'battle_climax';
+        break;
+      case 3:
+        typeText = 'battle_finale';
+        break;
+    }
+
+    const sprite = MyTextureManager.createSprite(typeText as any);
+    if (!sprite) return;
+    sprite.x = this.screenCenterWidth;
+    sprite.y = this.screenCenterHeight * 2 - sprite.texture.height / 2;
+    sprite.anchor.set(0.5);
+    this.addChild(sprite);
+
+    // 一定時間で消える
+    window.setTimeout(() => {
+      sprite.alpha = 0;
+    }, 5000);
+  }
 }

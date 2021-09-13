@@ -1,8 +1,33 @@
 // 共通で使うオブジェクト
+import { ease } from 'pixi-ease';
+import { SceneManager } from 'pixi-scenes';
 import * as PIXI from 'pixi.js';
 
+/**
+ * フェードアウト処理
+ * whiteBackをsceneに追加しておくこと
+ */
+export const fadeout = (obj: any, scenes: SceneManager, targetSceneName: string) => {
+  const example2 = ease.add(
+    obj,
+    {
+      x: 0,
+      y: 0,
+      alpha: 1.0,
+      rotation: 0,
+      scale: 1,
+      skewX: 0, // これ増やすと傾く
+      blend: 0xffffff,
+    },
+    { repeat: false, reverse: false, duration: 1000, ease: 'easeOutSine' },
+  );
+  example2.once('complete', () => {
+    scenes.start(targetSceneName);
+  });
+};
+
 /** でかい白 */
-export const whiteBack = new PIXI.Graphics().beginFill(0xffffff).drawRect(0, 0, 5000, 2500).endFill();
+export const whiteBack = () => new PIXI.Graphics().beginFill(0xffffff).drawRect(0, 0, 5000, 2500).endFill();
 
 export const circle = new PIXI.Graphics().beginFill(0x00ffff, 1).lineStyle(2, 0x000000).drawCircle(0, 0, 20);
 

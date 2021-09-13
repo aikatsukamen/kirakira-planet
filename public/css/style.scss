@@ -30,6 +30,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 100%;
   max-width: 100%;
   // background-color: #f1f1f1;
   @media (min-width: $_ROOM_MIN_WIDTH) {
@@ -40,12 +41,19 @@ body {
   }
 }
 
-@media (max-width: $ROOM_MIN_WIDTH) {
-  #room-wrapper {
-    position: relative;
-    // height: 65vh;
-    // background-color: #1099bb;
-  }
+#room-wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aquamarine;
+}
+
+.mv-area {
+  position: fixed;
+  top: 0;
+  z-index: 1;
 }
 
 #loading {
@@ -97,18 +105,15 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: 'Motogi', 'Cubicle';
+  z-index: 2;
   canvas {
     width: 100%;
     height: auto;
-    // position: absolute;
-    // left: 50%;
-    // top: 50%;
-    // transform: translate3d( -50%, -50%, 0 );
   }
 
   @media (max-width: $ROOM_MIN_WIDTH) {
     padding-top: 30px;
-    background-color: #1099bb;
+    // background-color: #1099bb;
     // position: absolute;
     // top: 15%;
     canvas {
@@ -346,30 +351,6 @@ body {
     margin: 0;
   }
 }
-
-// #office {
-//     min-width: 100%;
-//     min-height: 100vh;
-//     max-width: 100%;
-//     max-height: 100vh;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-// }
-
-// #background {
-//     z-index: -10;
-// }
-
-// #UI {
-//     position: absolute;
-//     bottom: 10%;
-//     width: 100%;
-//     display: flex;
-//     flex-direction: row;
-//     justify-content: center;
-// }
 
 @media (max-width: 768px) {
   #main,

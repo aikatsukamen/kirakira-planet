@@ -1,9 +1,18 @@
+import { MusicResult, ScoreData } from './types';
+
 declare global {
   interface Window {
-    closeSampleFunc: any;
-    bindedFunc: any;
-    TweenMax: any;
-    Power1: any;
+    // シーンをまたいで使いたいデータ
+
+    /** 選んだ楽曲 */
+    scoreData: ScoreData;
+
+    /** プレイリザルト */
+    musicResult: MusicResult;
+
+    debug: {
+      message: string;
+    };
   }
 }
 export {};
