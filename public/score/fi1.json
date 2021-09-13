@@ -1,0 +1,31 @@
+{
+  "title": "ファンタジっくイマジネーション",
+  "level": 1,
+  "musictype": 1,
+  "videoId": "mXtqz850Yb8",
+  "offset": 6,
+  "musicLength": 127000,
+  "notes": [
+    { "time": 2, "type": 0, "finish": 4, "group": 0 },
+    { "time": 2.1, "type": 0, "finish": 1, "group": 0 },
+    { "time": 8, "type": 0, "finish": 0, "group": 0 },
+    { "time": 9, "type": 0, "finish": 1, "group": 0 },
+    { "time": 10, "type": 0, "finish": 2, "group": 0 },
+    { "time": 11, "type": 0, "finish": 3, "group": 0 },
+    { "time": 12, "type": 0, "finish": 4, "group": 0 },
+    { "time": 13, "type": 0, "finish": 5, "group": 0 },
+    { "time": 16, "type": 0, "finish": 1, "group": 0 },
+    { "time": 19, "type": 0, "finish": 2, "group": 0 },
+    { "time": 19, "type": 0, "finish": 5, "group": 0 },
+    { "time": 22, "type": 0, "finish": 3, "group": 0 },
+    { "time": 24, "type": 0, "finish": 1, "group": 0 },
+    { "time": 26, "type": 0, "finish": 2, "group": 0 },
+    { "time": 28, "type": 0, "finish": 2, "group": 0 },
+    { "time": 30, "type": 0, "finish": 2, "group": 0 },
+    { "time": 32, "type": 0, "finish": 2, "group": 0 },
+    { "time": 34, "type": 0, "finish": 1, "group": 0 },
+    { "time": 36, "type": 0, "finish": 2, "group": 0 },
+    { "time": 38, "type": 0, "finish": 2, "group": 0 },
+    { "time": 40, "type": 0, "finish": 2, "group": 0 }
+  ]
+}

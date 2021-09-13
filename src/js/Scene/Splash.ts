@@ -4,15 +4,15 @@ import MyTextureManager from '../Texture/Texture';
 import { sound } from '@pixi/sound';
 import * as Const from '../const';
 import { ease } from 'pixi-ease';
-import { whiteBack } from './Common';
+import { fadeout, whiteBack } from './Common';
 
 export default class SplashScene extends Scene {
-  /** とりあず表示してるテキスト */
-  private header: PIXI.Text;
   private startButton: PIXI.Sprite;
 
   private screenCenterWidth: number;
   private screenCenterHeight: number;
+
+  private back: PIXI.Graphics;
 
   public init = (): void => {
     if (!this.app) throw 'null';
@@ -27,12 +27,6 @@ export default class SplashScene extends Scene {
     back.on('pointertap', this.clickBack);
     this.addChild(back);
 
-    // this.header = new PIXI.Text('Splash');
-    // this.header.x = this.screenCenterWidth;
-    // this.header.y = this.screenCenterHeight;
-    // this.header.anchor.set(0.5);
-    // this.addChild(this.header);
-
     // Start
     const startButton = MyTextureManager.createSprite('tap_start');
     if (!startButton) return;
@@ -45,8 +39,9 @@ export default class SplashScene extends Scene {
     // 音
     sound.add('se_tap', 'res/se/tap.mp3');
 
-    whiteBack.alpha = 0;
-    this.addChild(whiteBack);
+    this.back = whiteBack();
+    this.back.alpha = 0;
+    this.addChild(this.back);
   };
 
   isTransition: boolean = false;
@@ -70,34 +65,18 @@ export default class SplashScene extends Scene {
       { repeat: true, reverse: true, duration: 100, ease: 'easeOutSine' },
     );
 
-    // シーンのコンテナを白にフェードアウト
-    const example2 = ease.add(
-      whiteBack,
-      {
-        x: 0,
-        y: 0,
-        alpha: 1.0,
-        rotation: 0,
-        scale: 1,
-        skewX: 0, // これ増やすと傾く
-        blend: 0xffffff,
-      },
-      { repeat: false, reverse: false, duration: 1000, ease: 'easeOutSine' },
-    );
-    example2.on('each', () => console.log('ease updated object during frame using PIXI.Ticker.'));
-    example2.once('complete', () => {
-      // 終わったら遷移
-      (this.scenes as SceneManager).start(Const.SCENE_LIST.playSong);
-    });
+    fadeout(this.back, this.scenes as SceneManager, Const.SCENE_LIST.menu);
   };
 
-  public start = (): void => {
-    // this.header.angle = 0;
-    (this.scenes as SceneManager).start(Const.SCENE_LIST.splash);
-  };
+  // public start = (): void => {
+  //   console.log('Splash start');
+  // };
 
-  /** 毎フレーム動くやつ */
+  /**
+   * 毎フレーム動くやつ
+   * @param delta 前回実行時からの差分時間
+   */
   public update(delta: number): void {
-    // this.header.angle += (delta / 1000) * 45;
+    //
   }
 }
