@@ -21,7 +21,7 @@ export const fadeout = (obj: any, scenes: SceneManager, targetSceneName: string)
     },
     { repeat: false, reverse: false, duration: 1000, ease: 'easeOutSine' },
   );
-  example2.once('complete', () => {
+  example2.on('complete', () => {
     scenes.start(targetSceneName);
   });
 };

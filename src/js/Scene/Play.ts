@@ -17,7 +17,7 @@ const RATING_TABLE = {
     range: 32, //ms
     color: 0xff0000,
   },
-  great: {
+  verygood: {
     score: 600,
     range: 64, //ms
     color: 0xffff00,
@@ -74,6 +74,7 @@ export default class PlaySong extends Scene {
   private notesMap: Map<string, Notes> = new Map();
   private notesContainer: PIXI.Container;
   private startButtonContainer: PIXI.Container = new PIXI.Container();
+  private startButton: PIXI.Sprite;
 
   /** ノーツ出現時間(ms): 大きくするほど低速 */
   MARKER_APPEARANCE_DELTA = 1000;
@@ -142,6 +143,7 @@ export default class PlaySong extends Scene {
       miss: 0,
     };
     this.scoreText.text = '0';
+    this.totalScore = 0;
 
     this.gameTime = 0;
     this.isStartSong = false;
@@ -181,7 +183,7 @@ export default class PlaySong extends Scene {
       },
       { repeat: false, reverse: false, duration: 1000, ease: 'easeOutSine' },
     );
-    example.once('complete', () => {
+    example.on('complete', () => {
       // フェードイン後
     });
   };
@@ -216,6 +218,7 @@ export default class PlaySong extends Scene {
   /** 楽曲開始 */
   private startSong = () => {
     // スタートボタンを非表示にする
+    this.startButton.alpha = 0;
     this.startButtonContainer.children.map((item) => item.destroy());
 
     // 再生開始
@@ -243,8 +246,9 @@ export default class PlaySong extends Scene {
     sprite.x = this.screenCenterWidth;
     sprite.y = this.screenCenterHeight;
     sprite.anchor.set(0.5);
+    sprite.alpha = 0;
+    this.startButton = sprite;
 
-    this.startButtonContainer.alpha = 0;
     this.startButtonContainer.addChild(geo);
     this.startButtonContainer.addChild(sprite);
     this.addChild(this.startButtonContainer);
@@ -271,7 +275,7 @@ export default class PlaySong extends Scene {
 
     // ボタン押せるように
     this.startButtonContainer.interactive = true;
-    this.startButtonContainer.alpha = 1;
+    this.startButton.alpha = 1;
   };
 
   /**
@@ -430,16 +434,22 @@ export default class PlaySong extends Scene {
         this.reaction(m, 'perfect');
         return true;
       }
-      if (delta <= RATING_TABLE['great'].range) {
+      if (delta <= RATING_TABLE['verygood'].range) {
         unitIcon.fireEffect();
         sound.play('se_tap');
-        this.reaction(m, 'great');
+        this.reaction(m, 'verygood');
         return true;
       }
       if (delta <= RATING_TABLE['good'].range) {
         unitIcon.fireEffect();
         sound.play('se_tap');
         this.reaction(m, 'good');
+        return true;
+      }
+      if (delta <= RATING_TABLE['safe'].range) {
+        unitIcon.fireEffect();
+        sound.play('se_tap');
+        this.reaction(m, 'safe');
         return true;
       }
       if (delta <= RATING_TABLE['miss'].range) {
