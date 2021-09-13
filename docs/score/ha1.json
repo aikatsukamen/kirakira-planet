@@ -4,7 +4,7 @@
   "musictype": 1,
   "videoId": "j83U2Zf6vCA",
   "offset": 6,
-  "musicLength": 5000,
+  "musicLength": 127000,
   "battle": [0, 29, 70, 105],
   "notes": [
     {
@@ -281,6 +281,12 @@
       "time": 125.43267800000001,
       "type": 0,
       "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 125.43267800000001,
+      "type": 0,
+      "finish": 2,
       "group": 0
     }
   ]

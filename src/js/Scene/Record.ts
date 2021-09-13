@@ -263,6 +263,7 @@ export default class PlaySong extends Scene {
         judge: this.judgeResult,
       };
       console.log(this.recordList);
+      fadeout(this.back, this.scenes as SceneManager, Const.SCENE_LIST.result);
     }
   };
 

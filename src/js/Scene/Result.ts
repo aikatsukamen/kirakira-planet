@@ -1,10 +1,8 @@
 import * as PIXI from 'pixi.js';
 import { Scene, SceneManager } from 'pixi-scenes';
-import MyTextureManager from '../Texture/Texture';
 import * as Const from '../const';
 import { ease } from 'pixi-ease';
 import { circle, whiteBack } from './Common';
-import { MusicResult } from '../types/types';
 
 export default class Result extends Scene {
   private screenCenterWidth: number = 0;
@@ -35,6 +33,7 @@ export default class Result extends Scene {
     console.log(`Result start`);
     this.back.alpha = 0;
 
+    this.resultContainer.children.map((item) => (item.alpha = 0));
     this.resultContainer.children.map((item) => item.destroy());
     this.createResult();
 
@@ -52,7 +51,7 @@ export default class Result extends Scene {
       },
       { repeat: false, reverse: false, duration: 1000, ease: 'easeOutSine' },
     );
-    example.once('complete', () => {
+    example.on('complete', () => {
       // フェードイン後
     });
   };
@@ -74,7 +73,7 @@ export default class Result extends Scene {
     button.scale.y = 2;
     button.interactive = true;
     button.buttonMode = true;
-    button.once('pointertap', () => {
+    button.on('pointertap', () => {
       (this.scenes as SceneManager).start(Const.SCENE_LIST.menu);
     });
     container.addChild(button);

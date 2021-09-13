@@ -59,7 +59,7 @@ export default class Menu extends Scene {
       },
       { repeat: false, reverse: false, duration: 1000, ease: 'easeOutSine' },
     );
-    example.once('complete', () => {
+    example.on('complete', () => {
       // フェードイン後
     });
   }
@@ -92,6 +92,7 @@ export default class Menu extends Scene {
       scoreContainer.on('pointertap', () => {
         window.scoreData = score;
         (this.scenes as SceneManager).start(Const.SCENE_LIST.playSong);
+        // (this.scenes as SceneManager).start(Const.SCENE_LIST.record);
       });
       this.addChild(scoreContainer);
       i++;

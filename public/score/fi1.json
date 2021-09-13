@@ -4,28 +4,278 @@
   "musictype": 1,
   "videoId": "mXtqz850Yb8",
   "offset": 6,
-  "musicLength": 127000,
+  "musicLength": 128000,
+  "battle": [0, 27, 69, 99],
   "notes": [
-    { "time": 2, "type": 0, "finish": 4, "group": 0 },
-    { "time": 2.1, "type": 0, "finish": 1, "group": 0 },
-    { "time": 8, "type": 0, "finish": 0, "group": 0 },
-    { "time": 9, "type": 0, "finish": 1, "group": 0 },
-    { "time": 10, "type": 0, "finish": 2, "group": 0 },
-    { "time": 11, "type": 0, "finish": 3, "group": 0 },
-    { "time": 12, "type": 0, "finish": 4, "group": 0 },
-    { "time": 13, "type": 0, "finish": 5, "group": 0 },
-    { "time": 16, "type": 0, "finish": 1, "group": 0 },
-    { "time": 19, "type": 0, "finish": 2, "group": 0 },
-    { "time": 19, "type": 0, "finish": 5, "group": 0 },
-    { "time": 22, "type": 0, "finish": 3, "group": 0 },
-    { "time": 24, "type": 0, "finish": 1, "group": 0 },
-    { "time": 26, "type": 0, "finish": 2, "group": 0 },
-    { "time": 28, "type": 0, "finish": 2, "group": 0 },
-    { "time": 30, "type": 0, "finish": 2, "group": 0 },
-    { "time": 32, "type": 0, "finish": 2, "group": 0 },
-    { "time": 34, "type": 0, "finish": 1, "group": 0 },
-    { "time": 36, "type": 0, "finish": 2, "group": 0 },
-    { "time": 38, "type": 0, "finish": 2, "group": 0 },
-    { "time": 40, "type": 0, "finish": 2, "group": 0 }
+    {
+      "time": 2.7499919999999984,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 4.216672999999999,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 5.216664999999997,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 6.483309999999998,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 8.18332,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 9.299987999999997,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 10.466649999999998,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 11.699990999999999,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 32.56658399999999,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 33.949926,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 35.149922,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 36.516576,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 37.933233,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 39.116566,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 40.416577,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 41.783233,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 42.999886999999994,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 44.366557,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 45.649891000000004,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 47.016545,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 49.566569,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 50.866539,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 52.083203999999995,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 74.366479,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 75.699803,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 76.999807,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 78.283142,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 79.533124,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 80.86648,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 103.083076,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 104.416405,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 105.81639299999999,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 106.983069,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 108.266386,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 109.583065,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 112.233055,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 113.43305600000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 114.849709,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 117.38304000000001,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 118.68303599999999,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 119.983027,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 121.333033,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 122.64969399999998,
+      "type": 0,
+      "finish": 3,
+      "group": 0
+    },
+    {
+      "time": 123.93301600000001,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    },
+    {
+      "time": 125.266351,
+      "type": 0,
+      "finish": 2,
+      "group": 0
+    }
   ]
 }
